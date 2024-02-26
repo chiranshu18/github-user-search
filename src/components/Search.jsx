@@ -9,7 +9,8 @@ const Search = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1); // Initialize with page 1
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
 
   const redirectToProfile = (url) => () => {
     window.open(url, "_blank");
@@ -20,7 +21,7 @@ const Search = () => {
       if (searchTerm.trim() !== "") {
         handleSearch();
       } else {
-        // If the search term is empty, clear the search results
+        // If the search term is empty then clear the search results
         setSearchResults([]);
       }
     }, 300);
@@ -36,7 +37,9 @@ const Search = () => {
       const response = await axios.get(
         `https://api.github.com/search/users?q=${searchTerm}+in:fullname&sort=followers&order=desc&page=${currentPage}`
       );
+      setTotalPages(Math.ceil(response.data.total_count / 30));
       setSearchResults(response.data.items);
+      console.log(response);
     } catch (error) {
       setError("Error fetching data. Please try again.");
       console.error("Error fetching data:", error);
@@ -45,7 +48,6 @@ const Search = () => {
     }
   };
 
-  // Function to handle pagination
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
     handleSearch();
@@ -61,7 +63,8 @@ const Search = () => {
         value={searchTerm}
         onChange={(e) => {
           setSearchTerm(e.target.value);
-          setCurrentPage(1); // Reset to page 1 when the search term changes
+          // Reset to page 1 when the search term changes
+          setCurrentPage(1);
         }}
       />
       {error && <p className="error">{error}</p>}
@@ -104,7 +107,6 @@ const Search = () => {
               </tbody>
             </table>
             <div className="pagination">
-              {/* Previous page button */}
               <button
                 onClick={() => handlePageChange(currentPage - 1)}
                 disabled={currentPage === 1}
@@ -112,8 +114,10 @@ const Search = () => {
                 Previous
               </button>
               <span>Page {currentPage}</span>
-              {/* Next page button */}
-              <button onClick={() => handlePageChange(currentPage + 1)}>
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+              >
                 Next
               </button>
             </div>
