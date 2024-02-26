@@ -9,6 +9,7 @@ const Search = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1); // Initialize with page 1
 
   const redirectToProfile = (url) => () => {
     window.open(url, "_blank");
@@ -33,7 +34,7 @@ const Search = () => {
       setError(null);
 
       const response = await axios.get(
-        `https://api.github.com/search/users?q=${searchTerm}+in:fullname&sort=followers&order=desc`
+        `https://api.github.com/search/users?q=${searchTerm}+in:fullname&sort=followers&order=desc&page=${currentPage}`
       );
       setSearchResults(response.data.items);
     } catch (error) {
@@ -44,6 +45,12 @@ const Search = () => {
     }
   };
 
+  // Function to handle pagination
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
+    handleSearch();
+  };
+
   return (
     <div className="search-container">
       <input
@@ -52,7 +59,10 @@ const Search = () => {
         type="text"
         placeholder="Search by name..."
         value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
+        onChange={(e) => {
+          setSearchTerm(e.target.value);
+          setCurrentPage(1); // Reset to page 1 when the search term changes
+        }}
       />
       {error && <p className="error">{error}</p>}
 
@@ -93,6 +103,20 @@ const Search = () => {
                 })}
               </tbody>
             </table>
+            <div className="pagination">
+              {/* Previous page button */}
+              <button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+              >
+                Previous
+              </button>
+              <span>Page {currentPage}</span>
+              {/* Next page button */}
+              <button onClick={() => handlePageChange(currentPage + 1)}>
+                Next
+              </button>
+            </div>
           </div>
         ) : (
           <p className="no-results">No results found</p>

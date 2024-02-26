@@ -79,3 +79,11 @@ tbody {
   margin: 0;
   font: 16px;
 }
+
+.pagination {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
