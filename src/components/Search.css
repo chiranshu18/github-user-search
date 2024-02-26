@@ -1,0 +1,76 @@
+.search-container {
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+}
+
+.search-input {
+  width: 300px;
+  height: 30px;
+  border-radius: 4px;
+  border: 0px;
+  padding: 5px 15px 5px 15px;
+  border: 1px solid #8294bb;
+}
+
+.error {
+  color: red;
+}
+
+.table-wrapper {
+  padding: 0px 20px 0px 20px;
+}
+
+.table {
+  border: 1px solid #8294bb;
+  padding: 24px;
+  border-radius: 8px;
+}
+
+tbody {
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.avatar-col {
+  width: 60px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-right: 25px;
+}
+
+.user-col {
+  width: 200px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.avatar-col-item {
+  padding-top: 15px;
+}
+
+.user-col-item {
+  padding-top: 15px;
+  a {
+    text-decoration: none;
+  }
+}
+
+.avatar-img {
+  width: 25px;
+  height: 25px;
+  border-radius: 100%;
+}
+
+.github-icon {
+  cursor: pointer;
+}
+
+.no-results {
+  margin: 0;
+  font: 16px;
+  
+}
