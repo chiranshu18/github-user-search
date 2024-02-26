@@ -14,6 +14,9 @@
   border: 0px;
   padding: 5px 15px 5px 15px;
   border: 1px solid #8294bb;
+  @media (max-width: 550px) {
+    width: 200px;
+  }
 }
 
 .error {
@@ -21,13 +24,16 @@
 }
 
 .table-wrapper {
-  padding: 0px 20px 0px 20px;
+  padding: 0px 20px 20px 20px;
 }
 
 .table {
   border: 1px solid #8294bb;
   padding: 24px;
   border-radius: 8px;
+  min-width: 450px;
+  overflow-y: auto;
+  overflow-x: auto;
 }
 
 tbody {
@@ -72,5 +78,4 @@ tbody {
 .no-results {
   margin: 0;
   font: 16px;
-  
 }
